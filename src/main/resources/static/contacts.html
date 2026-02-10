@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Management Dashboard</title>
+</head>
+<body>
+
+<h2>All Submitted Contacts</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody id="contactTable"></tbody>
+</table>
+
+<script>
+    fetch("http://localhost:8080/contacts")
+        .then(res => res.json())
+        .then(data => {
+            const table = document.getElementById("contactTable");
+
+            data.forEach(contact => {
+                const row = `
+                    <tr>
+                        <td>${contact.id}</td>
+                        <td>${contact.name}</td>
+                        <td>${contact.email}</td>
+                        <td>${contact.message}</td>
+                    </tr>
+                `;
+                table.innerHTML += row;
+            });
+        })
+        .catch(error => console.error("Error:", error));
+</script>
+
+</body>
+</html>
