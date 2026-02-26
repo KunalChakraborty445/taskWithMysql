@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contact Management Dashboard</title>
+    <title>Admin Dashboard</title>
 </head>
 <body>
 
-<h2>All Submitted Contacts</h2>
+<h2>Admin Dashboard</h2>
+
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <button type="submit">Logout</button>
+</form>
+
+<h3>All Submitted Contacts</h3>
 
 <table border="1">
     <thead>
@@ -20,8 +27,13 @@
 </table>
 
 <script>
-    fetch("http://localhost:8080/contacts")
-        .then(res => res.json())
+    fetch("/contacts")
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Not authorized");
+            }
+            return res.json();
+        })
         .then(data => {
             const table = document.getElementById("contactTable");
 
