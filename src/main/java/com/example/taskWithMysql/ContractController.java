@@ -36,7 +36,6 @@ public class ContractController {
     
 
     @GetMapping("/contacts")
-    @CrossOrigin(origins = "*")
 public List<Contact> getAllContacts() {
     return contactRepository.findAll();
     }
